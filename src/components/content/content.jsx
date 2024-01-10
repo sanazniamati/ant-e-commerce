@@ -1,9 +1,8 @@
 /** @format */
-
-import React from "react";
+import styles from "./content.module.css";
 
 function content(props) {
-  return <div>content</div>;
+  return <div className={styles.container}>content</div>;
 }
 
 export default content;
