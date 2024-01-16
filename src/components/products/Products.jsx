@@ -1,20 +1,24 @@
 /** @format */
 "use client";
 import { useEffect, useState } from "react";
-import { getAllProducts } from "@/app/api/categoris";
-import { Badge, Button, Card, Image, List, Rate, Typography } from "antd";
+// import { addToCart, getAllProducts } from "@/app/api/categoris";
+import {
+  Badge,
+  Button,
+  Card,
+  Image,
+  List,
+  Rate,
+  Typography,
+  message,
+} from "antd";
 import styles from "../../app/page.module.css";
 
-function Products(props) {
-  const [items, setItems] = useState([]);
-  useEffect(() => {
-    getAllProducts().then((res) => {
-      setItems(res.products);
-    });
-  }, []);
+function Products({ records }) {
   return (
     <List
       grid={{ column: 3 }}
+      dataSource={records}
       renderItem={(product, index) => {
         return (
           <Badge.Ribbon
@@ -40,7 +44,7 @@ function Products(props) {
                   disabled
                   value={product.rating}
                 />,
-                <AddToCartButton key={product.index} />,
+                <AddToCartButton key={product.index} item={product} />,
               ]}
             >
               <Card.Meta
@@ -67,11 +71,14 @@ function Products(props) {
           </Badge.Ribbon>
         );
       }}
-      dataSource={items}
     ></List>
   );
-  function AddToCartButton() {
-    const addProductToCart = () => {};
+  function AddToCartButton({ item }) {
+    const addProductToCart = () => {
+      addToCart(item.id).then((res) => {
+        message.success(`${item.title}  has been added `);
+      });
+    };
     return (
       <Button type="link" onClick={addProductToCart}>
         Add to Cart

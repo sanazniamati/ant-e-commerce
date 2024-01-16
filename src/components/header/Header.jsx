@@ -1,80 +1,74 @@
 /** @format */
-"use client";
-import React, { useState } from "react";
-import { HomeFilled } from "@ant-design/icons";
-import { Menu } from "antd";
-import styles from "./header.module.css";
-import { useRouter } from "next/navigation";
 
-function Header(props) {
-  const router = useRouter();
-  const handleOnMenuClick = (item) => {
-    router.push(`/${item.key}`);
-  };
+import { Menu } from "antd";
+import { HomeFilled } from "@ant-design/icons";
+import Link from "next/link";
+import styles from "./header.module.css";
+
+const Header = () => {
   return (
-    <div className={styles.header}>
+    <div className={styles.continer}>
       <Menu
-        onClick={handleOnMenuClick}
         mode="horizontal"
         items={[
           {
-            label: <HomeFilled />,
-            key: "",
+            label: (
+              <Link href="/">
+                <HomeFilled />
+              </Link>
+            ),
+            key: "home",
           },
           {
             label: "Men",
             key: "men",
-            // children: [
-            //   {
-            //     label: "Men's Shirts",
-            //     key: "mens-shirts",
-            //   },
-            //   {
-            //     label: "Men's Shoes",
-            //     key: "mens-shoes",
-            //   },
-            //   {
-            //     label: "Men's Watches",
-            //     key: "mens-watches",
-            //   },
-            // ],
+            children: [
+              {
+                label: <Link href="/categories/mens-shirts">Mens Shirts</Link>,
+                key: "mens-shirts",
+              },
+              {
+                label: <Link href="/categories/mens-shoes">Mens Shoes</Link>,
+                key: "mens-shoes",
+              },
+              {
+                label: (
+                  <Link href="/categories/mens-watches">Mens Watches</Link>
+                ),
+                key: "mens-watches",
+              },
+            ],
           },
           {
             label: "Women",
             key: "women",
-            // children: [
-            //   {
-            //     label: "Women's Dresses",
-            //     key: "womens-dresses",
-            //   },
-            //   {
-            //     label: "Women's Shoes",
-            //     key: "womens-shoes",
-            //   },
-            //   {
-            //     label: "Women's Watches",
-            //     key: "womens-watches",
-            //   },
-            //   {
-            //     label: "Women's Bags",
-            //     key: "womens-bags",
-            //   },
-            //   {
-            //     label: "Women's Jewellery",
-            //     key: "womens-jewellery",
-            //   },
-            // ],
+            children: [
+              {
+                label: (
+                  <Link href="/categories/womens-dresses">Womens Dresses</Link>
+                ),
+                key: "women-dresses",
+              },
+              {
+                label: <Link href="/categories/women-shoes">Womens Shoes</Link>,
+                key: "women-shoes",
+              },
+              {
+                label: (
+                  <Link href="/categories/women-watches">Womens Watches</Link>
+                ),
+                key: "women-watches",
+              },
+            ],
           },
           {
-            label: "Fragrances",
-            key: "fragrances",
+            label: <Link href="/categories/fragrences">Fragrences</Link>,
+            key: "fragrences",
           },
         ]}
-      >
-        Header
-      </Menu>
+      />
     </div>
   );
-}
+};
 
 export default Header;
