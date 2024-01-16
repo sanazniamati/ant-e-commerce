@@ -2,9 +2,10 @@
 
 "use client";
 
-import { Card, List, Image, Typography, Flex, Badge } from "antd";
+import { Card, List, Image, Typography, Flex, Badge, Rate } from "antd";
 const { Text, Paragraph } = Typography;
 import { getProductsByCategory } from "../../api/route";
+import AddToCartButton from "../../../components/addToCartButton/AddToCartButton";
 
 // styles
 import styles from "./singleCategory.module.css";
@@ -30,6 +31,7 @@ const page = async ({ params }) => {
               >
                 <Card
                   title={product.title}
+                  className={styles.itemCard}
                   key={index}
                   cover={
                     <Image
@@ -38,24 +40,36 @@ const page = async ({ params }) => {
                       alt=""
                     />
                   }
+                  actions={[
+                    <Rate
+                      key={product.index}
+                      allowHalf
+                      disabled
+                      value={product.rating}
+                    />,
+                    <AddToCartButton key={product.index} item={product} />,
+                  ]}
                 >
                   <Card.Meta
                     title={
-                      <Paragraph>
-                        <Flex gap="small">
-                          <Text>Price: ${product.price}</Text>
-                          <Text delete type="danger">
-                            $
-                            {parseFloat(
-                              product.price +
-                                (product.price * product.discountPercentage) /
-                                  100,
-                            ).toFixed(2)}
-                          </Text>
-                        </Flex>
-                      </Paragraph>
+                      <Typography.Paragraph>
+                        Price :${product.price}{" "}
+                        <Typography.Text delete type="danger">
+                          {parseFloat(
+                            product.price +
+                              (product.price * product.discountPercentage) /
+                                100,
+                          ).toFixed(2)}
+                        </Typography.Text>
+                      </Typography.Paragraph>
                     }
-                    description={product.description}
+                    description={
+                      <Typography.Paragraph
+                        ellipsis={{ rows: 2, expandable: true, symbol: "more" }}
+                      >
+                        {product.description}
+                      </Typography.Paragraph>
+                    }
                   ></Card.Meta>
                 </Card>
               </Badge.Ribbon>
